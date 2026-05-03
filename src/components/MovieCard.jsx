@@ -18,7 +18,7 @@ export default function MovieCard({ item }) {
         <img
           src={item.poster}
           alt={item.title}
-          className="w-full aspect-[2/2] object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full aspect-[2/3] object-cover transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
         />
 
@@ -28,14 +28,14 @@ export default function MovieCard({ item }) {
         {/* Type badge */}
         <div className="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           <span className="text-[10px] font-bold bg-red-600 text-white px-1.5 py-0.5 rounded uppercase tracking-wider">
-            {item.type === 'movie' ? 'Фильм' : 'Сериал'}
+            {{ movie: 'Movie', series: 'TV Series', serial: 'TV Series', cartoon: 'Cartoon' }[item.type] ?? 'TV Series'}
           </span>
         </div>
 
         {/* Heart button */}
         <button
           className="absolute top-2 right-2 p-2 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-600 hover:scale-110"
-          aria-label="Добавить в избранное"
+          aria-label="Add to favorites"
         >
           <HeartIcon />
         </button>

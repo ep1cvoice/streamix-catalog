@@ -5,7 +5,7 @@ export default function Favorites() {
         className="text-5xl font-black text-white mb-8 tracking-wider"
         style={{ fontFamily: "'Bebas Neue', sans-serif" }}
       >
-        Избранное
+        Favorites
       </h1>
 
       <div className="flex flex-col items-center justify-center py-32">
@@ -25,8 +25,8 @@ export default function Favorites() {
             />
           </svg>
         </div>
-        <p className="text-gray-400 text-lg font-medium mb-2">Здесь пока пусто</p>
-        <p className="text-gray-600 text-sm">Нажимайте ♡ на карточках, чтобы добавить сюда фильмы и сериалы</p>
+        <p className="text-gray-400 text-lg font-medium mb-2">Nothing here yet</p>
+        <p className="text-gray-600 text-sm">Click ♡ on any card to save it here</p>
       </div>
     </div>
   )

@@ -8,7 +8,7 @@ export default function Series() {
         className="text-5xl font-black text-white mb-8 tracking-wider"
         style={{ fontFamily: "'Bebas Neue', sans-serif" }}
       >
-        Сериалы
+        Series
       </h1>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {series.map(item => (

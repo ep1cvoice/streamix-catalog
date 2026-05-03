@@ -1,6 +1,6 @@
 import HeroBanner from '../components/HeroBanner'
 import MovieCard from '../components/MovieCard'
-import { movies, series } from '../data/content'
+import { movies, series, cartoons } from '../data/content'
 
 function ContentRow({ title, items }) {
   return (
@@ -18,10 +18,11 @@ function ContentRow({ title, items }) {
 export default function Home() {
   return (
     <>
-      <HeroBanner item={movies[0]} />
+      <HeroBanner item={series[0]} />
       <div className="px-8 md:px-12 pb-16 -mt-28 relative z-10">
-        <ContentRow title="Фильмы" items={movies} />
-        <ContentRow title="Сериалы" items={series} />
+        <ContentRow title="Movies" items={movies} />
+        <ContentRow title="Series" items={series} />
+        <ContentRow title="Cartoons" items={cartoons} />
       </div>
     </>
   )

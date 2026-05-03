@@ -4,25 +4,25 @@ const StarIcon = () => (
   </svg>
 )
 
+const TYPE_LABEL = { movie: 'Movie', series: 'TV Series', serial: 'TV Series', cartoon: 'Cartoon' }
+
 export default function HeroBanner({ item }) {
+
   return (
     <div className="relative h-[90vh] w-full overflow-hidden">
-      {/* Background image */}
       <img
         src={item.hero}
         alt={item.title}
-        className="absolute inset-0 w-full h-full object-cover scale-105"
+        className="absolute inset-0 w-full h-full object-cover object-top scale-105"
       />
 
-      {/* Gradient overlays */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/60 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-[#141414]/30" />
 
-      {/* Content */}
       <div className="absolute inset-0 flex items-center">
         <div className="px-8 md:px-12 max-w-2xl">
           <p className="text-red-500 text-xs font-bold uppercase tracking-[0.2em] mb-3">
-            {item.type === 'movie' ? 'Фильм' : 'Сериал'} · {item.genre}
+            {TYPE_LABEL[item.type] ?? 'TV Series'} · {item.genre}
           </p>
 
           <h1
@@ -38,9 +38,6 @@ export default function HeroBanner({ item }) {
               <span className="text-yellow-400 font-bold text-sm">{item.rating}</span>
             </div>
             <span className="text-gray-400 text-sm">{item.year}</span>
-            <span className="border border-gray-600 text-gray-300 text-xs px-2 py-0.5 rounded">
-              {item.genre}
-            </span>
           </div>
 
           <p className="text-gray-300 text-sm leading-relaxed mb-8 max-w-md line-clamp-3">
@@ -52,13 +49,13 @@ export default function HeroBanner({ item }) {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 fill-white" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
               </svg>
-              Смотреть
+              Watch
             </button>
             <button className="flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white font-bold px-8 py-3 rounded border border-white/20 backdrop-blur-sm transition-colors duration-200 text-sm">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
               </svg>
-              Добавить
+              Add to List
             </button>
           </div>
         </div>
