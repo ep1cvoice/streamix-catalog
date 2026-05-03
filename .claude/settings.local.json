@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\pavel\\\\Desktop\\\\projects\\\\streamix-app\" -Recurse -Force)",
+      "Bash(Select-Object FullName)",
+      "Bash(ConvertTo-Csv -NoTypeInformation)",
+      "Bash(Out-String)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\pavel\\\\Desktop\\\\projects\\\\streamix-app\" -Recurse -Force | Select-Object FullName | ForEach-Object { $_.FullName })",
+      "Bash(npm install *)",
+      "Bash(npm run *)"
+    ]
+  }
+}
