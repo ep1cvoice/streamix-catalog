@@ -8,7 +8,7 @@ function ContentRow({ title, items }) {
       <h2 className="text-xl font-bold text-white mb-5 tracking-wide">{title}</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {items.map(item => (
-          <MovieCard key={item.id} item={item} />
+          <MovieCard key={item.id} item={item} trailer={item.trailer}/>
         ))}
       </div>
     </section>
