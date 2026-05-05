@@ -1,16 +1,109 @@
 import { createPortal } from 'react-dom';
+import StarIcon from '../assets/Icons/StarIcon';
 
-export default function MovieModal({ children, onClose }) {
+const TYPE_LABEL = { movie: 'Movie', series: 'TV Series', serial: 'TV Series', cartoon: 'Cartoon' };
+
+export default function MovieModal({ item, onClose }) {
+	const isMovie = item.type === 'movie';
+
 	return createPortal(
-		<div className='fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center'>
-			<div className='relative w-[90%] max-w-xl bg-neutral-900 text-white p-6 rounded-2xl shadow-lg animate-fadeIn'>
+		<div
+			className='fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4'
+			onClick={onClose}>
+			<div
+				className='relative w-full max-w-2xl bg-neutral-900 text-white rounded-2xl shadow-2xl overflow-hidden overflow-y-auto max-h-[90vh] animate-fadeIn'
+				onClick={e => e.stopPropagation()}>
+
+				{/* Close button */}
 				<button
 					onClick={onClose}
-					className='absolute top-3 right-3 text-white text-xl hover:text-red-600 transition'
+					className='absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center bg-black/60 rounded-full text-white hover:bg-red-600 transition cursor-pointer
+'
 					aria-label='Close modal'>
 					×
 				</button>
-				{children}
+
+				<div className='flex flex-col sm:flex-row'>
+					{/* Poster */}
+					<img
+						src={item.poster}
+						alt={item.title}
+						className='w-full sm:w-44 object-cover object-top shrink-0 max-h-64 sm:max-h-none'
+					/>
+
+					{/* Info */}
+					<div className='flex flex-col gap-3 p-5 min-w-0'>
+
+						{/* Title + badges */}
+						<div>
+							<h2 className='text-xl font-bold leading-tight mb-1'>{item.title}</h2>
+							<div className='flex flex-wrap items-center gap-2 text-xs'>
+								<span className='bg-red-600 text-white px-2 py-0.5 rounded font-bold uppercase tracking-wide'>
+									{TYPE_LABEL[item.type] ?? 'Unknown'}
+								</span>
+								<span className='text-gray-400'>{item.year}</span>
+								<div className='flex items-center gap-1'>
+									<StarIcon />
+									<span className='text-yellow-400 font-semibold'>{item.rating}</span>
+								</div>
+								<span className='text-gray-500'>{item.genre}</span>
+							</div>
+						</div>
+
+						{/* Description */}
+						<p className='text-gray-300 text-sm leading-relaxed'>{item.description}</p>
+
+						{/* Meta grid */}
+						<div className='grid grid-cols-2 gap-x-4 gap-y-2 text-sm border-t border-white/10 pt-3'>
+							{isMovie ? (
+								<div>
+									<span className='text-gray-500 text-xs uppercase tracking-wide'>Director</span>
+									<p className='text-white'>{item.director}</p>
+								</div>
+							) : (
+								<div>
+									<span className='text-gray-500 text-xs uppercase tracking-wide'>Creator</span>
+									<p className='text-white'>{item.creator}</p>
+								</div>
+							)}
+
+							<div>
+								<span className='text-gray-500 text-xs uppercase tracking-wide'>
+									{isMovie ? 'Runtime' : 'Seasons'}
+								</span>
+								<p className='text-white'>
+									{isMovie ? `${item.duration} min` : `${item.seasons} season${item.seasons !== 1 ? 's' : ''}`}
+								</p>
+							</div>
+
+							<div>
+								<span className='text-gray-500 text-xs uppercase tracking-wide'>Cast</span>
+								<p className='text-white'>{item.cast.join(', ')}</p>
+							</div>
+
+							<div>
+								<span className='text-gray-500 text-xs uppercase tracking-wide'>Country / Language</span>
+								<p className='text-white'>{item.country} &middot; {item.language.toUpperCase()}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{/* Trailer */}
+				{item.trailer && (
+					<div className='border-t border-white/10'>
+						<p className='text-xs text-gray-500 uppercase tracking-wide px-5 pt-4 pb-2'>Trailer</p>
+						<iframe
+							className='w-full aspect-video'
+							src={`https://www.youtube.com/embed/${item.trailer}`}
+							title={`${item.title} trailer`}
+							frameBorder='0'
+							allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+							referrerPolicy='strict-origin-when-cross-origin'
+							allowFullScreen
+						/>
+					</div>
+				)}
 			</div>
 		</div>,
 		document.body,

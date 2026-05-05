@@ -9,17 +9,7 @@ export default function MovieCard({ item }) {
 	return (
 		<>
 			{isOpenModal && (
-				<MovieModal onClose={() => setIsOpenModal(false)}>
-					<iframe
-						width='373'
-						height='210'
-						src={`https://www.youtube.com/embed/${item.trailer}?amp;?controls=0`}
-						title='YouTube video player'
-						frameBorder='0'
-						allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-						referrerPolicy='strict-origin-when-cross-origin'
-						allowfullscreen></iframe>
-				</MovieModal>
+				<MovieModal item={item} onClose={() => setIsOpenModal(false)} />
 			)}
 
 			<div
@@ -47,6 +37,7 @@ export default function MovieCard({ item }) {
 
 					{/* Heart button */}
 					<button
+						onClick={e => e.stopPropagation()}
 						className='absolute top-2 right-2 p-2 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-600 hover:scale-110'
 						aria-label='Add to favorites'>
 						<HeartIcon />

@@ -30,6 +30,7 @@ export const movies = [
     duration: 169,
     language: 'en',
     country: 'USA',
+    trailer: '2LqzF5WauAw',
   },
   {
     id: 3,
@@ -45,6 +46,7 @@ export const movies = [
     duration: 155,
     language: 'en',
     country: 'USA',
+    trailer: 'n9xhJrPXop4',
   },
   {
     id: 4,
@@ -60,6 +62,7 @@ export const movies = [
     duration: 148,
     language: 'en',
     country: 'USA',
+    trailer: 'YoHD9XEInc0',
   },
   {
     id: 5,
@@ -75,6 +78,7 @@ export const movies = [
     duration: 175,
     language: 'en',
     country: 'USA',
+    trailer: '1x0GpEZnwa8',
   },
   {
     id: 6,
@@ -90,6 +94,7 @@ export const movies = [
     duration: 154,
     language: 'en',
     country: 'USA',
+    trailer: 's7EdQ4FqbhY',
   },
   {
     id: 7,
@@ -105,6 +110,7 @@ export const movies = [
     duration: 136,
     language: 'en',
     country: 'USA',
+    trailer: 'vKQi3bBA1y8',
   },
   {
     id: 8,
@@ -120,6 +126,7 @@ export const movies = [
     duration: 139,
     language: 'en',
     country: 'USA',
+    trailer: '_XgQA9Ab0Gw',
   },
   {
     id: 9,
@@ -135,6 +142,7 @@ export const movies = [
     duration: 180,
     language: 'en',
     country: 'USA',
+    trailer: 'q6JTfzbxczU',
   },
   {
     id: 10,
@@ -150,6 +158,7 @@ export const movies = [
     duration: 132,
     language: 'ko',
     country: 'South Korea',
+    trailer: '5xH0HfJHsaY',
   },
 ]
 
@@ -169,6 +178,7 @@ export const series = [
     seasons: 4,
     language: 'en',
     country: 'USA',
+    trailer: '5SKP1_F7ReE',
   },
   {
     id: 12,
@@ -184,6 +194,7 @@ export const series = [
     seasons: 5,
     language: 'en',
     country: 'USA',
+    trailer: 'HhesaQXLuRY',
   },
   {
     id: 13,
@@ -199,6 +210,7 @@ export const series = [
     seasons: 1,
     language: 'en',
     country: 'UK',
+    trailer: 's9APLXM9Ei8',
   },
   {
     id: 14,
@@ -214,6 +226,7 @@ export const series = [
     seasons: 8,
     language: 'en',
     country: 'USA',
+    trailer: 'J7JYw5kQg_Y',
   },
   {
     id: 15,
@@ -229,6 +242,7 @@ export const series = [
     seasons: 3,
     language: 'en',
     country: 'USA',
+    trailer: 'aOC8E8z_ifw',
   },
   {
     id: 16,
@@ -244,6 +258,7 @@ export const series = [
     seasons: 4,
     language: 'en',
     country: 'USA',
+    trailer: 'YXYxYJl1Pw8',
   },
   {
     id: 17,
@@ -259,6 +274,7 @@ export const series = [
     seasons: 6,
     language: 'en',
     country: 'UK',
+    trailer: 'CVErgTa6O0I',
   },
   {
     id: 18,
@@ -274,6 +290,7 @@ export const series = [
     seasons: 3,
     language: 'en',
     country: 'USA',
+    trailer: 'Xo4T56l74Mk',
   },
   {
     id: 19,
@@ -289,6 +306,7 @@ export const series = [
     seasons: 2,
     language: 'en',
     country: 'USA',
+    trailer: 'DotnJ7tTA34',
   },
   {
     id: 20,
@@ -304,6 +322,7 @@ export const series = [
     seasons: 6,
     language: 'en',
     country: 'UK',
+    trailer: 'jDiYGjp5iFg',
   },
 ]
 
@@ -322,6 +341,7 @@ export const cartoons = [
     seasons: 7,
     language: 'en',
     country: 'USA',
+    trailer: 'XO43hYFRSbs',
   },
   {
     id: 22,
@@ -337,6 +357,7 @@ export const cartoons = [
     seasons: 26,
     language: 'en',
     country: 'USA',
+    trailer: 'uLrlLDLJpMo',
   },
   {
     id: 23,
@@ -352,6 +373,7 @@ export const cartoons = [
     seasons: 35,
     language: 'en',
     country: 'USA',
+    trailer: 'O83CiL2_lKU',
   },
   {
     id: 24,
@@ -367,6 +389,7 @@ export const cartoons = [
     seasons: 10,
     language: 'en',
     country: 'USA',
+    trailer: 'aWmtcYvhj68',
   },
   {
     id: 25,
@@ -382,6 +405,7 @@ export const cartoons = [
     seasons: 6,
     language: 'en',
     country: 'USA',
+    trailer: 'i1eJMig5Ik4',
   },
   {
     id: 26,
@@ -397,6 +421,7 @@ export const cartoons = [
     seasons: 3,
     language: 'en',
     country: 'USA',
+    trailer: 'ASkU1GEQaKI',
   },
   {
     id: 27,
@@ -412,6 +437,7 @@ export const cartoons = [
     seasons: 14,
     language: 'en',
     country: 'USA',
+    trailer: 'WIfnM9ntFc8',
   },
   {
     id: 28,
@@ -427,6 +453,7 @@ export const cartoons = [
     seasons: 2,
     language: 'en',
     country: 'USA',
+    trailer: 'yfUDIPUETUg',
   },
   {
     id: 29,
@@ -442,6 +469,7 @@ export const cartoons = [
     seasons: 22,
     language: 'en',
     country: 'USA',
+    trailer: 'roeWUfVaGsc',
   },
   {
     id: 30,
@@ -457,6 +485,7 @@ export const cartoons = [
     seasons: 14,
     language: 'en',
     country: 'USA',
+    trailer: 'GDcOfvVVyzE',
   },
 ]
 
