@@ -188,6 +188,7 @@ export const series = [
     genre: 'Drama, Crime',
     type: 'series',
     poster: 'https://image.tmdb.org/t/p/w1280/ztkUQFLlC19CCMYHW9o1zWhJRNq.jpg',
+    hero: './',
     description: 'A chemistry teacher diagnosed with cancer teams up with a former student to manufacture methamphetamine and descends into crime.',
     creator: 'Vince Gilligan',
     cast: ['Bryan Cranston', 'Aaron Paul', 'Anna Gunn'],

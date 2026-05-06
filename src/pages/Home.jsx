@@ -18,7 +18,7 @@ function ContentRow({ title, items }) {
 export default function Home() {
   return (
     <>
-      <HeroBanner item={series[0]} />
+      <HeroBanner />
       <div className="px-8 md:px-12 pb-16 -mt-28 relative z-10">
         <ContentRow title="Movies" items={movies} />
         <ContentRow title="Series" items={series} />
