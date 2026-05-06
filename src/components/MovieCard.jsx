@@ -1,4 +1,5 @@
 import { useState, lazy, Suspense } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import HeartIcon from '../assets/Icons/HeartIcon';
 import StarIcon from '../assets/Icons/StarIcon';
 import { useFavoritesContext } from '../context/FavoritesContext';
@@ -11,21 +12,24 @@ export default function MovieCard({ item }) {
 
 	return (
 		<>
-			{isOpenModal && (
-				<Suspense>
-					<MovieModal item={item} onClose={() => setIsOpenModal(false)} />
-				</Suspense>
-			)}
+			<AnimatePresence>
+				{isOpenModal && (
+					<Suspense fallback={null}>
+						<MovieModal item={item} onClose={() => setIsOpenModal(false)} />
+					</Suspense>
+				)}
+			</AnimatePresence>
 
 			<div
 				onClick={() => setIsOpenModal(true)}
 				className='group relative bg-[#1c1c1c] rounded-md overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:z-10 hover:shadow-[0_8px_32px_rgba(220,38,38,0.25)]'>
-				{/* Poster */}
+				{/* Poster — layoutId links this image to the one inside the modal */}
 				<div className='relative overflow-hidden'>
-					<img
+					<motion.img
+						layoutId={`poster-${item.id}`}
 						src={item.poster}
 						alt={item.title}
-						className='w-full aspect-[2/3] object-cover transition-transform duration-500 group-hover:scale-105'
+						className='w-full aspect-[2/3] object-cover'
 						loading='lazy'
 					/>
 
@@ -35,15 +39,14 @@ export default function MovieCard({ item }) {
 					{/* Type badge */}
 					<div className='absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
 						<span className='text-[10px] font-bold bg-red-600 text-white px-1.5 py-0.5 rounded uppercase tracking-wider'>
-							{{ movie: 'Movie', series: 'TV Series', serial: 'TV Series', cartoon: 'Cartoon' }[item.type] ??
-								'TV Series'}
+							{{ movie: 'Movie', series: 'TV Series', serial: 'TV Series', cartoon: 'Cartoon' }[item.type] ?? 'TV Series'}
 						</span>
 					</div>
 
 					{/* Heart button */}
 					<button
 						onClick={(e) => { e.stopPropagation(); toggle(item.id); }}
-						className='absolute top-2 right-2 p-2 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-white-600 hover:scale-110'
+						className='absolute top-2 right-2 p-2 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-600 hover:scale-110'
 						aria-label={liked ? 'Remove from favorites' : 'Add to favorites'}>
 						<HeartIcon filled={liked} />
 					</button>

@@ -1,5 +1,5 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { featuredMovies } from '../data/featuredMovies';
 import { useFavoritesContext } from '../context/FavoritesContext';
 const MovieModal = lazy(() => import('../components/MovieModal'));
@@ -12,6 +12,9 @@ export default function HeroBanner() {
 
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const { toggle, isFavorite } = useFavoritesContext();
+
+	const { scrollY } = useScroll();
+	const heroY = useTransform(scrollY, [0, 600], [0, 130]);
 
 	const TYPE_LABEL = { movie: 'Movie', series: 'TV Series', serial: 'TV Series', cartoon: 'Cartoon' };
 
@@ -38,7 +41,7 @@ export default function HeroBanner() {
 						src={movie.hero}
 						alt={movie.title}
 						className='absolute inset-0 w-full h-full object-cover'
-					style={{ objectPosition: movie.objectPosition ?? 'top' }}
+					style={{ objectPosition: movie.objectPosition ?? 'top', y: heroY }}
 						initial={{ opacity: 0, scale: 1.08 }}
 						animate={{ opacity: 1, scale: 1 }}
 						exit={{ opacity: 0 }}

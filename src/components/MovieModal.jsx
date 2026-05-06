@@ -1,4 +1,5 @@
 import { createPortal } from 'react-dom';
+import { motion } from 'framer-motion';
 import StarIcon from '../assets/Icons/StarIcon';
 
 const TYPE_LABEL = { movie: 'Movie', series: 'TV Series', serial: 'TV Series', cartoon: 'Cartoon' };
@@ -7,25 +8,34 @@ export default function MovieModal({ item, onClose }) {
 	const isMovie = item.type === 'movie';
 
 	return createPortal(
-		<div
+		<motion.div
 			className='fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4'
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			transition={{ duration: 0.25 }}
 			onClick={onClose}>
-			<div
-				className='relative w-full max-w-2xl bg-neutral-900 text-white rounded-2xl shadow-2xl overflow-hidden overflow-y-auto max-h-[90vh] animate-fadeIn'
+
+			<motion.div
+				className='relative w-full max-w-2xl bg-neutral-900 text-white rounded-2xl shadow-2xl overflow-hidden overflow-y-auto max-h-[90vh]'
+				initial={{ scale: 0.92, opacity: 0 }}
+				animate={{ scale: 1,    opacity: 1 }}
+				exit={{    scale: 0.92, opacity: 0 }}
+				transition={{ type: 'spring', stiffness: 260, damping: 28 }}
 				onClick={e => e.stopPropagation()}>
 
 				{/* Close button */}
 				<button
 					onClick={onClose}
-					className='absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center bg-black/60 rounded-full text-white hover:bg-red-600 transition cursor-pointer
-'
+					className='absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center bg-black/60 rounded-full text-white hover:bg-red-600 transition cursor-pointer'
 					aria-label='Close modal'>
 					×
 				</button>
 
 				<div className='flex flex-col sm:flex-row'>
-					{/* Poster */}
-					<img
+					{/* Poster — layoutId matches the card poster so Framer morphs between them */}
+					<motion.img
+						layoutId={`poster-${item.id}`}
 						src={item.poster}
 						alt={item.title}
 						className='w-full sm:w-44 object-cover object-top shrink-0 max-h-64 sm:max-h-none'
@@ -104,8 +114,8 @@ export default function MovieModal({ item, onClose }) {
 						/>
 					</div>
 				)}
-			</div>
-		</div>,
+			</motion.div>
+		</motion.div>,
 		document.body,
 	);
 }

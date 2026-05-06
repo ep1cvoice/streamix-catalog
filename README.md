@@ -49,7 +49,6 @@ Open [http://localhost:5173](http://localhost:5173)
 
 ### High priority
 - [ ] **TypeScript migration** — strict types for content data, component props, hook returns
-- [ ] **Framer motion hero animations** 
 - [ ] **TMDB API integration** — replace static data with live API calls; add Trending, Top Rated, Now Playing sections
 
 
@@ -59,8 +58,7 @@ Open [http://localhost:5173](http://localhost:5173)
 
 ### Low priority
 - [ ] Genre filter chips on Movies / Series / Cartoons pages
-- [ ] Smooth page transitions
-- [ ] Animations
+
 
 ---
 
