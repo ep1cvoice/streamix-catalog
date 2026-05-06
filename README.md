@@ -49,14 +49,13 @@ Open [http://localhost:5173](http://localhost:5173)
 
 ### High priority
 - [ ] **TypeScript migration** — strict types for content data, component props, hook returns
+- [ ] **Framer motion hero animations** 
 - [ ] **TMDB API integration** — replace static data with live API calls; add Trending, Top Rated, Now Playing sections
-- [ ] **Favorites** — localStorage persistence, count badge on nav heart icon
-- [ ] **Trailer modal** — YouTube embed in an overlay; fetch video key from TMDB API; Esc to close, scroll lock, focus trap
+
 
 ### Medium priority
 - [ ] **Search** — full-text filter across all categories with debounce
 - [ ] **Skeleton loaders** — reusable `SkeletonCard` shown while images/data load
-- [ ] **Mobile polish** — test and refine all pages on small screens
 
 ### Low priority
 - [ ] Genre filter chips on Movies / Series / Cartoons pages

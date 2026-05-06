@@ -1,4 +1,13 @@
+import { useFavoritesContext } from '../context/FavoritesContext'
+import { movies, series, cartoons } from '../data/content'
+import MovieCard from '../components/MovieCard'
+
+const allContent = [...movies, ...series, ...cartoons]
+
 export default function Favorites() {
+  const { ids } = useFavoritesContext()
+  const items = allContent.filter(item => ids.includes(item.id))
+
   return (
     <div className="pt-28 px-8 md:px-12 pb-16 min-h-screen">
       <h1
@@ -8,26 +17,34 @@ export default function Favorites() {
         Favorites
       </h1>
 
-      <div className="flex flex-col items-center justify-center py-32">
-        <div className="text-red-600/30 mb-6">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-24 w-24"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-            />
-          </svg>
+      {items.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-32">
+          <div className="text-red-600/30 mb-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-24 w-24"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
+            </svg>
+          </div>
+          <p className="text-gray-400 text-lg font-medium mb-2">Nothing here yet</p>
+          <p className="text-gray-600 text-sm">Click ♡ on any card to save it here</p>
         </div>
-        <p className="text-gray-400 text-lg font-medium mb-2">Nothing here yet</p>
-        <p className="text-gray-600 text-sm">Click ♡ on any card to save it here</p>
-      </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          {items.map(item => (
+            <MovieCard key={item.id} item={item} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
