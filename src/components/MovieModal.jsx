@@ -56,7 +56,7 @@ export default function MovieModal({ item, onClose }) {
 									<StarIcon />
 									<span className='text-yellow-400 font-semibold'>{item.rating}</span>
 								</div>
-								<span className='text-gray-500'>{item.genre}</span>
+								<span className='text-gray-500'>{item.genre.join(', ')}</span>
 							</div>
 						</div>
 

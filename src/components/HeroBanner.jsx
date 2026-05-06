@@ -60,7 +60,7 @@ export default function HeroBanner() {
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.6, delay: 0.3 }}>
 						<p className='text-red-500 text-xs font-bold uppercase tracking-[0.2em] mb-3'>
-							{TYPE_LABEL[movie.type] ?? 'TV Series'} · {movie.genre}
+							{TYPE_LABEL[movie.type] ?? 'TV Series'} · {movie.genre.join(', ')}
 						</p>
 
 						<h1

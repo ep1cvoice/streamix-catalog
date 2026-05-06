@@ -57,7 +57,7 @@ Open [http://localhost:5173](http://localhost:5173)
 - [ ] **Skeleton loaders** — reusable `SkeletonCard` shown while images/data load
 
 ### Low priority
-- [ ] Genre filter chips on Movies / Series / Cartoons pages
+- [ ] Genre filter swiper row on Movies / Series / Cartoons pages
 
 
 ---

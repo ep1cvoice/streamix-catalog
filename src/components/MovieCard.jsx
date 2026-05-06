@@ -62,7 +62,7 @@ export default function MovieCard({ item }) {
 							<span className='text-yellow-400 text-xs font-semibold'>{item.rating}</span>
 						</div>
 					</div>
-					<span className='text-gray-600 text-xs mt-0.5 block'>{item.genre}</span>
+					<span className='text-gray-600 text-xs mt-0.5 block'>{item.genre.join(', ')}</span>
 				</div>
 
 				{/* Red bottom border on hover */}
