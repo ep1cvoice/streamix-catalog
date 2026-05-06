@@ -43,7 +43,7 @@ export default function MovieCard({ item }) {
 					{/* Heart button */}
 					<button
 						onClick={(e) => { e.stopPropagation(); toggle(item.id); }}
-						className='absolute top-2 right-2 p-2 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-600 hover:scale-110'
+						className='absolute top-2 right-2 p-2 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-white-600 hover:scale-110'
 						aria-label={liked ? 'Remove from favorites' : 'Add to favorites'}>
 						<HeartIcon filled={liked} />
 					</button>
