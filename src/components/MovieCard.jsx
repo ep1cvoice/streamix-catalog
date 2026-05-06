@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import MovieModal from './MovieModal';
+import { useState, lazy, Suspense } from 'react';
 import HeartIcon from '../assets/Icons/HeartIcon';
 import StarIcon from '../assets/Icons/StarIcon';
+const MovieModal = lazy(() => import('../components/MovieModal'));
 
 export default function MovieCard({ item }) {
 	const [isOpenModal, setIsOpenModal] = useState(false);
@@ -9,7 +9,9 @@ export default function MovieCard({ item }) {
 	return (
 		<>
 			{isOpenModal && (
-				<MovieModal item={item} onClose={() => setIsOpenModal(false)} />
+				<Suspense>
+					<MovieModal item={item} onClose={() => setIsOpenModal(false)} />
+				</Suspense>
 			)}
 
 			<div
@@ -37,7 +39,7 @@ export default function MovieCard({ item }) {
 
 					{/* Heart button */}
 					<button
-						onClick={e => e.stopPropagation()}
+						onClick={(e) => e.stopPropagation()}
 						className='absolute top-2 right-2 p-2 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-600 hover:scale-110'
 						aria-label='Add to favorites'>
 						<HeartIcon />
