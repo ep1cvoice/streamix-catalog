@@ -10,6 +10,7 @@ const Movies    = lazy(() => import('./pages/Movies'));
 const Series    = lazy(() => import('./pages/Series'));
 const Cartoons  = lazy(() => import('./pages/Cartoons'));
 const Favorites = lazy(() => import('./pages/Favorites'));
+const Search    = lazy(() => import('./pages/Search'));
 
 function PageSkeleton() {
   return (
@@ -37,6 +38,7 @@ function AppContent() {
               <Route path='/series'    element={<Series />} />
               <Route path='/cartoons'  element={<Cartoons />} />
               <Route path='/favorites' element={<Favorites />} />
+              <Route path='/search'    element={<Search />} />
             </Routes>
           </AnimatePresence>
         </Suspense>
