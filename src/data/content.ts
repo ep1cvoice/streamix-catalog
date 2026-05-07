@@ -1,4 +1,6 @@
-export const movies = [
+import type { Movie, Show, ContentItem } from '../types/content'
+
+export const movies: Movie[] = [
   {
     id: 1,
     title: 'The Dark Knight',
@@ -162,7 +164,7 @@ export const movies = [
   },
 ]
 
-export const series = [
+export const series: Show[] = [
   {
     id: 11,
     title: 'The Boys',
@@ -326,7 +328,7 @@ export const series = [
   },
 ]
 
-export const cartoons = [
+export const cartoons: Show[] = [
   {
     id: 21,
     title: 'Rick and Morty',
@@ -489,4 +491,4 @@ export const cartoons = [
   },
 ]
 
-export const allContent = [...movies, ...series, ...cartoons]
+export const allContent: ContentItem[] = [...movies, ...series, ...cartoons]

@@ -1,6 +1,6 @@
 # Streamix
 
-A Netflix-style streaming catalog UI — portfolio project built with React + Vite.
+A Netflix-style streaming catalog UI — portfolio project built with React + TS + Vite.
 
 ![Preview](./public/streamix-preview.jpg)
 
@@ -10,7 +10,9 @@ A Netflix-style streaming catalog UI — portfolio project built with React + Vi
 |------|---------|
 | React | 19 |
 | React Router | 6 |
+| TypeScript | 6 |
 | Tailwind CSS | 4 |
+| Framer Motion | 12 |
 | Vite | 8 |
 
 ## Getting started
@@ -48,12 +50,10 @@ Open [http://localhost:5173](http://localhost:5173)
 ## What's planned
 
 ### High priority
-- [ ] **TypeScript migration** — strict types for content data, component props, hook returns
 - [ ] **TMDB API integration** — replace static data with live API calls; add Trending, Top Rated, Now Playing sections
-
+- [ ] **Search** — full-text filter across all categories with debounce
 
 ### Medium priority
-- [ ] **Search** — full-text filter across all categories with debounce
 - [ ] **Skeleton loaders** — reusable `SkeletonCard` shown while images/data load
 
 ### Low priority

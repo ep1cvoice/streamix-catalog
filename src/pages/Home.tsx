@@ -4,8 +4,9 @@ import MovieCard from '../components/MovieCard'
 import PageWrapper from '../components/PageWrapper'
 import { movies, series, cartoons } from '../data/content'
 import { gridContainer, cardVariant } from '../utils/motionVariants'
+import type { ContentItem } from '../types/content'
 
-function ContentRow({ title, items }) {
+function ContentRow({ title, items }: { title: string; items: ContentItem[] }) {
   return (
     <section className='mb-12'>
       <h2 className='text-xl font-bold text-white mb-5 tracking-wide'>{title}</h2>

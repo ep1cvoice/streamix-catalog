@@ -2,9 +2,16 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { featuredMovies } from '../data/featuredMovies';
 import { useFavoritesContext } from '../context/FavoritesContext';
-const MovieModal = lazy(() => import('../components/MovieModal'));
 import StarIcon from '../assets/Icons/StarIcon';
 import HeartIcon from '../assets/Icons/HeartIcon';
+const MovieModal = lazy(() => import('../components/MovieModal'));
+
+const TYPE_LABEL: Record<string, string> = {
+	movie: 'Movie',
+	series: 'TV Series',
+	serial: 'TV Series',
+	cartoon: 'Cartoon',
+}
 
 export default function HeroBanner() {
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,8 +22,6 @@ export default function HeroBanner() {
 
 	const { scrollY } = useScroll();
 	const heroY = useTransform(scrollY, [0, 600], [0, 130]);
-
-	const TYPE_LABEL = { movie: 'Movie', series: 'TV Series', serial: 'TV Series', cartoon: 'Cartoon' };
 
 	useEffect(() => {
 		if (isOpenModal) return;
@@ -41,7 +46,7 @@ export default function HeroBanner() {
 						src={movie.hero}
 						alt={movie.title}
 						className='absolute inset-0 w-full h-full object-cover'
-					style={{ objectPosition: movie.objectPosition ?? 'top', y: heroY }}
+						style={{ objectPosition: movie.objectPosition ?? 'top', y: heroY }}
 						initial={{ opacity: 0, scale: 1.08 }}
 						animate={{ opacity: 1, scale: 1 }}
 						exit={{ opacity: 0 }}

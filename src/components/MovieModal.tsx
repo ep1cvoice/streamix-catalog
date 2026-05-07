@@ -1,12 +1,21 @@
 import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import StarIcon from '../assets/Icons/StarIcon';
+import type { ContentItem } from '../types/content';
 
-const TYPE_LABEL = { movie: 'Movie', series: 'TV Series', serial: 'TV Series', cartoon: 'Cartoon' };
+const TYPE_LABEL: Record<string, string> = {
+	movie: 'Movie',
+	series: 'TV Series',
+	serial: 'TV Series',
+	cartoon: 'Cartoon',
+}
 
-export default function MovieModal({ item, onClose }) {
-	const isMovie = item.type === 'movie';
+interface MovieModalProps {
+	item: ContentItem
+	onClose: () => void
+}
 
+export default function MovieModal({ item, onClose }: MovieModalProps) {
 	return createPortal(
 		<motion.div
 			className='fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4'
@@ -24,7 +33,6 @@ export default function MovieModal({ item, onClose }) {
 				transition={{ type: 'spring', stiffness: 260, damping: 28 }}
 				onClick={e => e.stopPropagation()}>
 
-				{/* Close button */}
 				<button
 					onClick={onClose}
 					className='absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center bg-black/60 rounded-full text-white hover:bg-red-600 transition cursor-pointer'
@@ -33,7 +41,6 @@ export default function MovieModal({ item, onClose }) {
 				</button>
 
 				<div className='flex flex-col sm:flex-row'>
-					{/* Poster — layoutId matches the card poster so Framer morphs between them */}
 					<motion.img
 						layoutId={`poster-${item.id}`}
 						src={item.poster}
@@ -41,10 +48,8 @@ export default function MovieModal({ item, onClose }) {
 						className='w-full sm:w-44 object-cover object-top shrink-0 max-h-64 sm:max-h-none'
 					/>
 
-					{/* Info */}
 					<div className='flex flex-col gap-3 p-5 min-w-0'>
 
-						{/* Title + badges */}
 						<div>
 							<h2 className='text-xl font-bold leading-tight mb-1'>{item.title}</h2>
 							<div className='flex flex-wrap items-center gap-2 text-xs'>
@@ -60,12 +65,10 @@ export default function MovieModal({ item, onClose }) {
 							</div>
 						</div>
 
-						{/* Description */}
 						<p className='text-gray-300 text-sm leading-relaxed'>{item.description}</p>
 
-						{/* Meta grid */}
 						<div className='grid grid-cols-2 gap-x-4 gap-y-2 text-sm border-t border-white/10 pt-3'>
-							{isMovie ? (
+							{item.type === 'movie' ? (
 								<div>
 									<span className='text-gray-500 text-xs uppercase tracking-wide'>Director</span>
 									<p className='text-white'>{item.director}</p>
@@ -79,10 +82,12 @@ export default function MovieModal({ item, onClose }) {
 
 							<div>
 								<span className='text-gray-500 text-xs uppercase tracking-wide'>
-									{isMovie ? 'Runtime' : 'Seasons'}
+									{item.type === 'movie' ? 'Runtime' : 'Seasons'}
 								</span>
 								<p className='text-white'>
-									{isMovie ? `${item.duration} min` : `${item.seasons} season${item.seasons !== 1 ? 's' : ''}`}
+									{item.type === 'movie'
+										? `${item.duration} min`
+										: `${item.seasons} season${item.seasons !== 1 ? 's' : ''}`}
 								</p>
 							</div>
 
@@ -99,7 +104,6 @@ export default function MovieModal({ item, onClose }) {
 					</div>
 				</div>
 
-				{/* Trailer */}
 				{item.trailer && (
 					<div className='border-t border-white/10'>
 						<p className='text-xs text-gray-500 uppercase tracking-wide px-5 pt-4 pb-2'>Trailer</p>

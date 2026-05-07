@@ -1,7 +1,8 @@
+import { type ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { pageVariants, pageTransition } from '../utils/motionVariants'
 
-export default function PageWrapper({ children }) {
+export default function PageWrapper({ children }: { children: ReactNode }) {
   return (
     <motion.div
       variants={pageVariants}

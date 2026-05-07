@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
-const NAV_LINKS = [
+interface NavLinkItem {
+  to: string
+  label: string
+  heart?: boolean
+}
+
+const NAV_LINKS: NavLinkItem[] = [
   { to: '/', label: 'Home' },
   { to: '/movies', label: 'Movies' },
   { to: '/series', label: 'Series' },
@@ -9,7 +15,7 @@ const NAV_LINKS = [
   { to: '/favorites', label: 'Favorites', heart: true },
 ]
 
-const HeartIcon = ({ filled }) => (
+const HeartIcon = ({ filled }: { filled: boolean }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className="h-[15px] w-[15px]"
@@ -26,10 +32,8 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
 
-  // Close drawer on navigation
   useEffect(() => { setIsOpen(false) }, [location])
 
-  // Lock body scroll while drawer is open
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -46,7 +50,6 @@ export default function Navbar() {
           STREAMIX
         </NavLink>
 
-        {/* Desktop links */}
         <ul className="hidden md:flex items-center gap-8 list-none m-0 p-0">
           {NAV_LINKS.map(({ to, label, heart }) => (
             <li key={to}>
@@ -75,7 +78,6 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Hamburger button — mobile only */}
         <button
           onClick={() => setIsOpen(o => !o)}
           className="md:hidden flex flex-col justify-center items-center gap-[5px] w-8 h-8"
@@ -87,7 +89,6 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Backdrop */}
       <div
         onClick={() => setIsOpen(false)}
         className={`fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden transition-opacity duration-300 ${
@@ -95,13 +96,11 @@ export default function Navbar() {
         }`}
       />
 
-      {/* Slide-in drawer */}
       <div
         className={`fixed top-0 right-0 z-50 h-full w-72 bg-[#0d0d0d] border-l border-white/5 flex flex-col md:hidden transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* Drawer header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/5">
           <span
             className="text-red-600 text-2xl tracking-widest"
@@ -120,7 +119,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Drawer links */}
         <ul className="flex flex-col list-none m-0 p-0 px-4 py-6 gap-1">
           {NAV_LINKS.map(({ to, label, heart }) => (
             <li key={to}>

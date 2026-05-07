@@ -10,7 +10,6 @@ const Series    = lazy(() => import('./pages/Series'));
 const Cartoons  = lazy(() => import('./pages/Cartoons'));
 const Favorites = lazy(() => import('./pages/Favorites'));
 
-// useLocation must live inside BrowserRouter, so routing logic is split here
 function AppContent() {
   const location = useLocation();
 

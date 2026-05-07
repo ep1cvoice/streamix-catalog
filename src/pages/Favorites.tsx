@@ -1,11 +1,9 @@
 import { motion } from 'framer-motion'
 import { useFavoritesContext } from '../context/FavoritesContext'
-import { movies, series, cartoons } from '../data/content'
+import { allContent } from '../data/content'
 import MovieCard from '../components/MovieCard'
 import PageWrapper from '../components/PageWrapper'
 import { gridContainer, cardVariant } from '../utils/motionVariants'
-
-const allContent = [...movies, ...series, ...cartoons]
 
 export default function Favorites() {
   const { ids } = useFavoritesContext()
