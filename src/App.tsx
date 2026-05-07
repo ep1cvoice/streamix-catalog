@@ -3,12 +3,24 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { FavoritesProvider } from './context/FavoritesContext';
 import Navbar from './components/Navbar';
+import SkeletonCard from './components/SkeletonCard';
 
 const Home      = lazy(() => import('./pages/Home'));
 const Movies    = lazy(() => import('./pages/Movies'));
 const Series    = lazy(() => import('./pages/Series'));
 const Cartoons  = lazy(() => import('./pages/Cartoons'));
 const Favorites = lazy(() => import('./pages/Favorites'));
+
+function PageSkeleton() {
+  return (
+    <div className='pt-28 px-8 md:px-12 pb-16'>
+      <div className='h-10 bg-[#2a2a2a] rounded w-48 mb-8 animate-pulse' />
+      <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4'>
+        {Array.from({ length: 10 }, (_, i) => <SkeletonCard key={i} />)}
+      </div>
+    </div>
+  );
+}
 
 function AppContent() {
   const location = useLocation();
@@ -17,7 +29,7 @@ function AppContent() {
     <FavoritesProvider>
       <div className='min-h-screen bg-[#141414] text-white'>
         <Navbar />
-        <Suspense fallback={<div className='min-h-screen bg-[#141414]' />}>
+        <Suspense fallback={<PageSkeleton />}>
           <AnimatePresence mode='wait'>
             <Routes location={location} key={location.pathname}>
               <Route path='/'          element={<Home />} />

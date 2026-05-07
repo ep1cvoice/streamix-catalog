@@ -54,9 +54,6 @@ Open [http://localhost:5173](http://localhost:5173)
 - [ ] **Search** — full-text filter across all categories with debounce
 
 ### Medium priority
-- [ ] **Skeleton loaders** — reusable `SkeletonCard` shown while images/data load
-
-### Low priority
 - [ ] Genre filter swiper row on Movies / Series / Cartoons pages
 
 
