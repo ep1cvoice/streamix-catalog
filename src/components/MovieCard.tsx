@@ -35,6 +35,12 @@ export default function MovieCard({ item }: { item: ContentItem }) {
 
 					<div className='absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
 
+					<img
+						src='/tmdb-logo.svg'
+						alt='TMDB'
+						className='absolute bottom-2 left-2 w-20 opacity-80'
+					/>
+
 					<div className='absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
 						<span className='text-[10px] font-bold bg-red-600 text-white px-1.5 py-0.5 rounded uppercase tracking-wider'>
 							{{ movie: 'Movie', series: 'TV Series', serial: 'TV Series', cartoon: 'Cartoon' }[item.type] ?? 'TV Series'}
@@ -43,7 +49,7 @@ export default function MovieCard({ item }: { item: ContentItem }) {
 
 					<button
 						onClick={(e) => { e.stopPropagation(); toggle(item.id); }}
-						className='absolute top-2 right-2 p-2 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-600 hover:scale-110'
+						className='absolute top-2 right-2 p-2 bg-black/60 rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-200 hover:bg-red-600 hover:scale-110'
 						aria-label={liked ? 'Remove from favorites' : 'Add to favorites'}>
 						<HeartIcon filled={liked} />
 					</button>

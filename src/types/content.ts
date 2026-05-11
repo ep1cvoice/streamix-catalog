@@ -7,14 +7,14 @@ export interface Movie {
   type: 'movie'
   poster: string
   description: string
-  cast: string[]
   language: string
-  country: string
-  trailer: string
   hero?: string
   objectPosition?: string
-  director: string
-  duration: number
+  director?: string
+  cast?: string[]
+  duration?: number
+  country?: string
+  trailer?: string
 }
 
 export interface Show {
@@ -26,14 +26,14 @@ export interface Show {
   type: 'series' | 'cartoon'
   poster: string
   description: string
-  cast: string[]
   language: string
-  country: string
-  trailer: string
   hero?: string
   objectPosition?: string
-  creator: string
-  seasons: number
+  creator?: string
+  cast?: string[]
+  seasons?: number
+  country?: string
+  trailer?: string
 }
 
 export type ContentItem = Movie | Show

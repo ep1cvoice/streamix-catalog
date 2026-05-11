@@ -1,6 +1,9 @@
+import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import StarIcon from '../assets/Icons/StarIcon';
+import { fetchVideos, fetchDetails } from '../api/tmdb';
+import type { Details } from '../api/tmdb';
 import type { ContentItem } from '../types/content';
 
 const TYPE_LABEL: Record<string, string> = {
@@ -16,6 +19,32 @@ interface MovieModalProps {
 }
 
 export default function MovieModal({ item, onClose }: MovieModalProps) {
+	const [trailerKey, setTrailerKey] = useState<string | null>(item.trailer ?? null);
+	const [trailerLoading, setTrailerLoading] = useState(!item.trailer);
+	const [details, setDetails] = useState<Details>({});
+
+	const mediaType = item.type === 'movie' ? 'movie' : 'tv';
+
+	useEffect(() => {
+		if (item.trailer) return;
+		fetchVideos(item.id, mediaType)
+			.then(key => { setTrailerKey(key); setTrailerLoading(false); })
+			.catch(() => setTrailerLoading(false));
+	}, [item.id, mediaType, item.trailer]);
+
+	useEffect(() => {
+		fetchDetails(item.id, mediaType)
+			.then(setDetails)
+			.catch(() => {});
+	}, [item.id, mediaType]);
+
+	const director = details.director ?? item.director;
+	const creator  = details.creator  ?? item.creator;
+	const cast     = details.cast     ?? item.cast;
+	const duration = details.duration ?? item.duration;
+	const seasons  = details.seasons  ?? item.seasons;
+	const country  = details.country  ?? item.country;
+
 	return createPortal(
 		<motion.div
 			className='fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4'
@@ -71,12 +100,12 @@ export default function MovieModal({ item, onClose }: MovieModalProps) {
 							{item.type === 'movie' ? (
 								<div>
 									<span className='text-gray-500 text-xs uppercase tracking-wide'>Director</span>
-									<p className='text-white'>{item.director}</p>
+									<p className='text-white'>{director ?? '—'}</p>
 								</div>
 							) : (
 								<div>
 									<span className='text-gray-500 text-xs uppercase tracking-wide'>Creator</span>
-									<p className='text-white'>{item.creator}</p>
+									<p className='text-white'>{creator ?? '—'}</p>
 								</div>
 							)}
 
@@ -86,38 +115,42 @@ export default function MovieModal({ item, onClose }: MovieModalProps) {
 								</span>
 								<p className='text-white'>
 									{item.type === 'movie'
-										? `${item.duration} min`
-										: `${item.seasons} season${item.seasons !== 1 ? 's' : ''}`}
+										? duration ? `${duration} min` : '—'
+										: seasons ? `${seasons} season${seasons !== 1 ? 's' : ''}` : '—'}
 								</p>
 							</div>
 
 							<div>
 								<span className='text-gray-500 text-xs uppercase tracking-wide'>Cast</span>
-								<p className='text-white'>{item.cast.join(', ')}</p>
+								<p className='text-white'>{cast?.join(', ') ?? '—'}</p>
 							</div>
 
 							<div>
 								<span className='text-gray-500 text-xs uppercase tracking-wide'>Country / Language</span>
-								<p className='text-white'>{item.country} &middot; {item.language.toUpperCase()}</p>
+								<p className='text-white'>{country ?? '—'} · {item.language.toUpperCase()}</p>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				{item.trailer && (
-					<div className='border-t border-white/10'>
-						<p className='text-xs text-gray-500 uppercase tracking-wide px-5 pt-4 pb-2'>Trailer</p>
+				<div className='border-t border-white/10'>
+					<p className='text-xs text-gray-500 uppercase tracking-wide px-5 pt-4 pb-2'>Trailer</p>
+					{trailerLoading ? (
+						<div className='w-full aspect-video bg-[#1a1a1a] animate-pulse' />
+					) : trailerKey ? (
 						<iframe
 							className='w-full aspect-video'
-							src={`https://www.youtube.com/embed/${item.trailer}`}
+							src={`https://www.youtube.com/embed/${trailerKey}`}
 							title={`${item.title} trailer`}
 							frameBorder='0'
 							allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
 							referrerPolicy='strict-origin-when-cross-origin'
 							allowFullScreen
 						/>
-					</div>
-				)}
+					) : (
+						<p className='text-gray-600 text-sm px-5 pb-5'>No trailer available</p>
+					)}
+				</div>
 			</motion.div>
 		</motion.div>,
 		document.body,
