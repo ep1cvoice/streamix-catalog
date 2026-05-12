@@ -40,7 +40,7 @@ export default function ScrollRow({ genre, items, loading = false }: ScrollRowPr
   };
 
   const arrowBase =
-    'absolute top-1/2 -translate-y-1/2 z-30 hidden sm:flex items-center justify-center w-12 h-12 rounded-full bg-black/60 text-white opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-red-600 hover:scale-110 cursor-pointer';
+    'absolute top-1/2 -translate-y-1/2 z-30 hidden sm:flex items-center justify-center w-12 h-12 rounded-full bg-black/60 text-white opacity-0 group-hover/row:opacity-100 transition-all duration-200 hover:bg-red-600 hover:scale-110';
 
   return (
     <section className='mb-10'>
@@ -48,7 +48,7 @@ export default function ScrollRow({ genre, items, loading = false }: ScrollRowPr
         className='text-3xl font-black text-white mb-4 tracking-wider'
         style={{ fontFamily: "'Bebas Neue', sans-serif" }}
       >{genre}</h2>
-      <div className='group relative'>
+      <div className='group/row relative'>
         <button
           onClick={() => scroll('left')}
           className={`${arrowBase} -left-4`}

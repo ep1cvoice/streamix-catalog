@@ -83,6 +83,57 @@ export async function fetchCartoons(): Promise<Show[]> {
 
 export const fetchSearch = (q: string) => get('/search/multi', { query: q });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function normalizeMovieDetail(data: any): Movie {
+  return {
+    id: data.id,
+    title: data.title,
+    year: data.release_date ? parseInt(data.release_date) : 0,
+    rating: Math.round(data.vote_average * 10) / 10,
+    genre: data.genres?.map((g: any) => g.name as string) ?? [],
+    type: 'movie',
+    poster: data.poster_path ? `${IMG}${data.poster_path}` : '',
+    hero: data.backdrop_path ? `${BACKDROP}${data.backdrop_path}` : undefined,
+    description: data.overview,
+    language: data.original_language,
+    director: data.credits?.crew?.find((c: any) => c.job === 'Director')?.name,
+    cast: data.credits?.cast?.slice(0, 5).map((c: any) => c.name as string),
+    duration: data.runtime ?? undefined,
+    country: data.production_countries?.[0]?.name,
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function normalizeShowDetail(data: any, type: 'series' | 'cartoon'): Show {
+  return {
+    id: data.id,
+    title: data.name,
+    year: data.first_air_date ? parseInt(data.first_air_date) : 0,
+    rating: Math.round(data.vote_average * 10) / 10,
+    genre: data.genres?.map((g: any) => g.name as string) ?? [],
+    type,
+    poster: data.poster_path ? `${IMG}${data.poster_path}` : '',
+    hero: data.backdrop_path ? `${BACKDROP}${data.backdrop_path}` : undefined,
+    description: data.overview,
+    language: data.original_language,
+    creator: data.created_by?.[0]?.name,
+    cast: data.credits?.cast?.slice(0, 5).map((c: any) => c.name as string),
+    seasons: data.number_of_seasons ?? undefined,
+    country: data.origin_country?.[0],
+  };
+}
+
+export async function fetchItemById(
+  id: number,
+  mediaType: 'movie' | 'tv',
+  type: 'movie' | 'series' | 'cartoon' = mediaType === 'movie' ? 'movie' : 'series'
+): Promise<ContentItem> {
+  const data = await get(`/${mediaType}/${id}`, { append_to_response: 'credits' });
+  return mediaType === 'movie'
+    ? normalizeMovieDetail(data)
+    : normalizeShowDetail(data, type as 'series' | 'cartoon');
+}
+
 export interface Details {
   director?: string
   creator?: string

@@ -23,7 +23,7 @@ export default function MovieCard({ item }: { item: ContentItem }) {
 
 			<div
 				onClick={() => setIsOpenModal(true)}
-				className='group relative bg-[#1c1c1c] rounded-md overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:z-10 hover:shadow-[0_8px_32px_rgba(220,38,38,0.25)]'>
+				className='group/card relative bg-[#1c1c1c] rounded-md overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:z-10 hover:shadow-[0_8px_32px_rgba(220,38,38,0.25)]'>
 				<div className='relative overflow-hidden rounded-t-md'>
 					<img
 						src={item.poster}
@@ -32,7 +32,7 @@ export default function MovieCard({ item }: { item: ContentItem }) {
 						loading='lazy'
 					/>
 
-					<div className='absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+					<div className='absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300' />
 
 					<img
 						src='/tmdb-logo.svg'
@@ -40,7 +40,7 @@ export default function MovieCard({ item }: { item: ContentItem }) {
 						className='absolute bottom-2 left-2 w-20 opacity-80'
 					/>
 
-					<div className='absolute top-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
+					<div className='absolute top-3 left-3 opacity-0 group-hover/card:opacity-100 transition-opacity duration-200'>
 						<span className='text-[10px] font-bold bg-red-600 text-white px-1.5 py-0.5 rounded uppercase tracking-wider'>
 							{{ movie: 'Movie', series: 'TV Series', serial: 'TV Series', cartoon: 'Cartoon' }[item.type] ?? 'TV Series'}
 						</span>
@@ -49,7 +49,7 @@ export default function MovieCard({ item }: { item: ContentItem }) {
 
 				<button
 					onClick={(e) => { e.stopPropagation(); toggle(item.id); }}
-					className='absolute top-4 right-2 p-2 bg-black/60 rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-colors duration-200 hover:bg-red-600 cursor-pointer'
+					className='absolute top-4 right-2 p-2 bg-black/60 rounded-full opacity-100 md:opacity-0 md:group-hover/card:opacity-100 transition-colors duration-200 hover:bg-red-600 cursor-pointer'
 					aria-label={liked ? 'Remove from favorites' : 'Add to favorites'}>
 					<HeartIcon filled={liked} />
 				</button>
@@ -66,7 +66,7 @@ export default function MovieCard({ item }: { item: ContentItem }) {
 					<span className='text-gray-600 text-xs mt-0.5 block truncate'>{item.genre.join(', ')}</span>
 				</div>
 
-				<div className='absolute bottom-0 left-0 right-0 h-0.5 bg-red-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left' />
+				<div className='absolute bottom-0 left-0 right-0 h-0.5 bg-red-600 scale-x-0 group-hover/card:scale-x-100 transition-transform duration-300 origin-left' />
 			</div>
 		</>
 	);

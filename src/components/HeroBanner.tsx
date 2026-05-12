@@ -1,9 +1,11 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
-import { featuredMovies } from '../data/featuredMovies';
+import { FEATURED_CONFIG } from '../data/featuredMovies';
+import { fetchItemById } from '../api/tmdb';
 import { useFavoritesContext } from '../context/FavoritesContext';
 import StarIcon from '../assets/Icons/StarIcon';
 import HeartIcon from '../assets/Icons/HeartIcon';
+import type { ContentItem } from '../types/content';
 const MovieModal = lazy(() => import('../components/MovieModal'));
 
 const TYPE_LABEL: Record<string, string> = {
@@ -14,8 +16,9 @@ const TYPE_LABEL: Record<string, string> = {
 }
 
 export default function HeroBanner() {
+	const [items, setItems] = useState<ContentItem[]>([]);
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const movie = featuredMovies[currentIndex];
+	const movie = items[currentIndex];
 
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const { toggle, isFavorite } = useFavoritesContext();
@@ -24,12 +27,26 @@ export default function HeroBanner() {
 	const heroY = useTransform(scrollY, [0, 600], [0, 130]);
 
 	useEffect(() => {
-		if (isOpenModal) return;
+		Promise.all(
+			FEATURED_CONFIG.map(cfg =>
+				fetchItemById(cfg.id, cfg.mediaType, cfg.type).then(item => ({
+					...item,
+					hero: cfg.hero,
+					objectPosition: cfg.objectPosition,
+				}))
+			)
+		).then(setItems).catch(() => {});
+	}, []);
+
+	useEffect(() => {
+		if (isOpenModal || items.length === 0) return;
 		const timer = setInterval(() => {
-			setCurrentIndex((prev) => (prev + 1) % featuredMovies.length);
+			setCurrentIndex((prev) => (prev + 1) % items.length);
 		}, 5000);
 		return () => clearInterval(timer);
-	}, [isOpenModal]);
+	}, [isOpenModal, items.length]);
+
+	if (!movie) return <div className='h-[90vh] w-full bg-[#141414]' />;
 
 	return (
 		<>
@@ -124,7 +141,7 @@ export default function HeroBanner() {
 				</div>
 
 				<div className='absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2'>
-					{featuredMovies.map((m, i) => (
+					{items.map((m, i) => (
 						<button
 							key={m.id}
 							onClick={() => setCurrentIndex(i)}
