@@ -1,13 +1,11 @@
 import { motion } from 'framer-motion'
 import { useFavoritesContext } from '../context/FavoritesContext'
-import { allContent } from '../data/content'
 import MovieCard from '../components/MovieCard'
 import PageWrapper from '../components/PageWrapper'
 import { gridContainer, cardVariant } from '../utils/motionVariants'
 
 export default function Favorites() {
-  const { ids } = useFavoritesContext()
-  const items = allContent.filter(item => ids.includes(item.id))
+  const { items } = useFavoritesContext()
 
   return (
     <PageWrapper>

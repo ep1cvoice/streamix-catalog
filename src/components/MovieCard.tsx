@@ -48,7 +48,7 @@ export default function MovieCard({ item }: { item: ContentItem }) {
 				</div>
 
 				<button
-					onClick={(e) => { e.stopPropagation(); toggle(item.id); }}
+					onClick={(e) => { e.stopPropagation(); toggle(item); }}
 					className='absolute top-4 right-2 p-2 bg-black/60 rounded-full opacity-100 md:opacity-0 md:group-hover/card:opacity-100 transition-colors duration-200 hover:bg-red-600 cursor-pointer'
 					aria-label={liked ? 'Remove from favorites' : 'Add to favorites'}>
 					<HeartIcon filled={liked} />
@@ -63,7 +63,7 @@ export default function MovieCard({ item }: { item: ContentItem }) {
 							<span className='text-yellow-400 text-xs font-semibold'>{item.rating}</span>
 						</div>
 					</div>
-					<span className='text-gray-600 text-xs mt-0.5 block truncate'>{item.genre.join(', ')}</span>
+					<span className='text-gray-600 text-xs mt-0.5 block truncate'>{(item.genre ?? []).join(', ')}</span>
 				</div>
 
 				<div className='absolute bottom-0 left-0 right-0 h-0.5 bg-red-600 scale-x-0 group-hover/card:scale-x-100 transition-transform duration-300 origin-left' />

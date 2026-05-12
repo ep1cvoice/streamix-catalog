@@ -1,23 +1,34 @@
 import { useState } from 'react';
+import type { ContentItem } from '../types/content';
 
-function load(): number[] {
+function load(): ContentItem[] {
 	try {
-		return JSON.parse(localStorage.getItem('favorites') ?? '[]');
+		const parsed = JSON.parse(localStorage.getItem('favorites') ?? '[]');
+		return Array.isArray(parsed)
+			? parsed.filter((x): x is ContentItem => typeof x === 'object' && x !== null && typeof x.id === 'number' && Array.isArray(x.genre))
+			: [];
 	} catch {
 		return [];
 	}
 }
 
 export function useFavorites() {
-	const [ids, setIds] = useState<number[]>(load);
+	const [items, setItems] = useState<ContentItem[]>(load);
 
-	function toggle(id: number) {
-		setIds((prev) => {
-			const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
+	function toggle(item: ContentItem) {
+		setItems((prev) => {
+			const next = prev.some(x => x.id === item.id)
+				? prev.filter(x => x.id !== item.id)
+				: [...prev, item];
 			localStorage.setItem('favorites', JSON.stringify(next));
 			return next;
 		});
 	}
 
-	return { ids, toggle, isFavorite: (id: number) => ids.includes(id) };
+	return {
+		items,
+		ids: items.map(x => x.id),
+		toggle,
+		isFavorite: (id: number) => items.some(x => x.id === id),
+	};
 }

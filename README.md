@@ -60,8 +60,7 @@ Open [http://localhost:5173](http://localhost:5173)
 ## What's planned
 
 - [ ] **TMDB-powered search** — replace static filtering with live `/search/multi` results and debounce
-- [ ] **Detail page** — dedicated `/movie/:id` and `/tv/:id` routes with full cast, related titles, and trailer
-- [ ] **Pagination / infinite scroll** — load more pages from TMDB as the user scrolls each genre row
+- [ ] **Pagination** — load more pages from TMDB as the user scrolls each genre row
 - [ ] **Genre filter chips** — filter Movies / Series / Cartoons pages by genre tag
 
 ---

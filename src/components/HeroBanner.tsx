@@ -113,7 +113,7 @@ export default function HeroBanner() {
 								Watch
 							</button>
 							<button
-								onClick={() => toggle(movie.id)}
+								onClick={() => toggle(movie)}
 								className={`flex items-center gap-2 font-bold px-8 py-3 rounded border backdrop-blur-sm transition-colors duration-200 text-sm cursor-pointer ${
 									isFavorite(movie.id)
 										? 'bg-red-600/20 border-red-600/60 text-red-400 hover:bg-red-600/30'
