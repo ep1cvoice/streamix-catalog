@@ -51,7 +51,7 @@ export default function ScrollRow({ genre, items, loading = false }: ScrollRowPr
       <div className='group/row relative'>
         <button
           onClick={() => scroll('left')}
-          className={`${arrowBase} -left-4`}
+          className={`${arrowBase} -left-4 cursor-pointer`}
           aria-label='Scroll left'
         >
           <ChevronLeft />
@@ -83,7 +83,7 @@ export default function ScrollRow({ genre, items, loading = false }: ScrollRowPr
 
         <button
           onClick={() => scroll('right')}
-          className={`${arrowBase} -right-4`}
+          className={`${arrowBase} -right-4 cursor-pointer`}
           aria-label='Scroll right'
         >
           <ChevronRight />

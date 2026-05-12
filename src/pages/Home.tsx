@@ -15,10 +15,15 @@ export default function Home() {
 
   const isLoading = moviesLoading || seriesLoading || cartoonsLoading;
 
-  const genreRows = useMemo(
-    () => groupByGenre([...movies, ...series, ...cartoons]),
-    [movies, series, cartoons]
-  );
+  const genreRows = useMemo(() => {
+    const seen = new Set<number>();
+    const unique = [...movies, ...series, ...cartoons].filter(item => {
+      if (seen.has(item.id)) return false;
+      seen.add(item.id);
+      return true;
+    });
+    return groupByGenre(unique);
+  }, [movies, series, cartoons]);
 
   return (
     <PageWrapper>
