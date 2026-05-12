@@ -13,7 +13,7 @@ export default function Search() {
 
   const results = useMemo(() => {
     if (!q) return []
-
+    // Title matches ranked first, then genre-only matches
     const titleMatches = allContent.filter(item =>
       item.title.toLowerCase().includes(q)
     )
@@ -27,7 +27,7 @@ export default function Search() {
   return (
     <PageWrapper>
       <div className='pt-28 px-8 md:px-12 pb-16 min-h-screen'>
-        <div className='mb-8 '>
+        <div className='mb-8'>
           <h1
             className='text-5xl font-black text-white mb-2 tracking-wider'
             style={{ fontFamily: "'Bebas Neue', sans-serif" }}

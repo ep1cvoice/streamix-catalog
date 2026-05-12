@@ -1,4 +1,4 @@
-import type { Movie, Show } from '../types/content';
+import type { Movie, Show, ContentItem } from '../types/content';
 
 const BASE = 'https://api.themoviedb.org/3';
 const KEY = import.meta.env.VITE_TMDB_KEY;
