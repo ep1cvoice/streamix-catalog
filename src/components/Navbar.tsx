@@ -71,7 +71,7 @@ export default function Navbar() {
       } else {
         navigate('/')
       }
-    }, 300)
+    }, 700)
   }
 
   function openSearch() {

@@ -1,28 +1,38 @@
-import { useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { allContent } from '../data/content'
+import { searchMulti } from '../api/tmdb'
 import MovieCard from '../components/MovieCard'
+import SkeletonCard from '../components/SkeletonCard'
 import PageWrapper from '../components/PageWrapper'
 import { gridContainer, cardVariant } from '../utils/motionVariants'
+import type { ContentItem } from '../types/content'
 
 export default function Search() {
   const [searchParams] = useSearchParams()
   const query = searchParams.get('q') ?? ''
-  const q = query.toLowerCase()
 
-  const results = useMemo(() => {
-    if (!q) return []
-    // Title matches ranked first, then genre-only matches
-    const titleMatches = allContent.filter(item =>
-      item.title.toLowerCase().includes(q)
-    )
-    const genreMatches = allContent.filter(item =>
-      !item.title.toLowerCase().includes(q) &&
-      item.genre.some(g => g.toLowerCase().includes(q))
-    )
-    return [...titleMatches, ...genreMatches]
-  }, [q])
+  const [results, setResults] = useState<ContentItem[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!query.trim()) {
+      setResults([])
+      setLoading(false)
+      return
+    }
+
+    let cancelled = false
+    setLoading(true)
+    setError(null)
+
+    searchMulti(query)
+      .then(data => { if (!cancelled) { setResults(data); setLoading(false) } })
+      .catch(err  => { if (!cancelled) { setError(String(err)); setLoading(false) } })
+
+    return () => { cancelled = true }
+  }, [query])
 
   return (
     <PageWrapper>
@@ -34,19 +44,25 @@ export default function Search() {
           >
             {query ? `"${query}"` : 'Search'}
           </h1>
-          {query && (
+          {query && !loading && (
             <p className='text-gray-500 text-sm'>
               {results.length} title{results.length !== 1 ? 's' : ''} found
             </p>
           )}
         </div>
 
-        {query && results.length === 0 ? (
+        {loading ? (
+          <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4'>
+            {Array.from({ length: 10 }, (_, i) => <SkeletonCard key={i} />)}
+          </div>
+        ) : error ? (
+          <p className='text-red-400'>{error}</p>
+        ) : query && results.length === 0 ? (
           <div className='flex flex-col items-center justify-center py-24 text-center'>
             <p className='text-gray-400 text-lg font-medium mb-2'>No results for "{query}"</p>
             <p className='text-gray-600 text-sm'>Try a different title or genre</p>
           </div>
-        ) : (
+        ) : results.length > 0 ? (
           <motion.div
             key={query}
             className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4'
@@ -60,7 +76,7 @@ export default function Search() {
               </motion.div>
             ))}
           </motion.div>
-        )}
+        ) : null}
       </div>
     </PageWrapper>
   )

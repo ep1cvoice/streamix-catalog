@@ -69,6 +69,21 @@ export async function fetchMovies(): Promise<Movie[]> {
   return data.results.map(normalizeMovie);
 }
 
+export async function fetchTopRated(): Promise<Movie[]> {
+  const data = await get('/movie/top_rated');
+  return data.results.map(normalizeMovie);
+}
+
+export async function fetchNowPlaying(): Promise<Movie[]> {
+  const data = await get('/movie/now_playing');
+  return data.results.map(normalizeMovie);
+}
+
+export async function fetchUpcoming(): Promise<Movie[]> {
+  const data = await get('/movie/upcoming');
+  return data.results.map(normalizeMovie);
+}
+
 export async function fetchSeries(): Promise<Show[]> {
   const data = await get('/tv/popular');
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -81,7 +96,15 @@ export async function fetchCartoons(): Promise<Show[]> {
   return data.results.map((item: any) => normalizeShow(item, 'cartoon'));
 }
 
-export const fetchSearch = (q: string) => get('/search/multi', { query: q });
+export async function searchMulti(q: string): Promise<ContentItem[]> {
+  const data = await get('/search/multi', { query: q });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (data.results as any[])
+    .filter((item) => item.media_type === 'movie' || item.media_type === 'tv')
+    .map((item): ContentItem =>
+      item.media_type === 'movie' ? normalizeMovie(item) : normalizeShow(item, 'series')
+    );
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function normalizeMovieDetail(data: any): Movie {

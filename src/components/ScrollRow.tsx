@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import MovieCard from './MovieCard';
 import SkeletonCard from './SkeletonCard';
@@ -9,6 +10,7 @@ interface ScrollRowProps {
   genre: string;
   items: ContentItem[];
   loading?: boolean;
+  to?: string;
 }
 
 const SCROLL_AMOUNT = 320;
@@ -29,7 +31,7 @@ function ChevronRight() {
   );
 }
 
-export default function ScrollRow({ genre, items, loading = false }: ScrollRowProps) {
+export default function ScrollRow({ genre, items, loading = false, to }: ScrollRowProps) {
   const trackRef = useRef<HTMLDivElement>(null);
 
   const scroll = (dir: 'left' | 'right') => {
@@ -44,10 +46,21 @@ export default function ScrollRow({ genre, items, loading = false }: ScrollRowPr
 
   return (
     <section className='mb-10'>
-      <h2
-        className='text-3xl font-black text-white mb-4 tracking-wider'
-        style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-      >{genre}</h2>
+      <div className='flex items-baseline gap-4 mb-4'>
+        <h2
+          className='text-3xl font-black text-white tracking-wider'
+          style={{ fontFamily: "'Bebas Neue', sans-serif" }}
+        >{genre}</h2>
+        {to && (
+          <Link
+            to={to}
+            className='text-xs font-semibold text-gray-500 hover:text-red-500 uppercase tracking-widest transition-colors duration-200 flex items-center gap-1 group/see'
+          >
+            See All
+            <span className='transition-transform duration-200 group-hover/see:translate-x-0.5'>›</span>
+          </Link>
+        )}
+      </div>
       <div className='group/row relative'>
         <button
           onClick={() => scroll('left')}

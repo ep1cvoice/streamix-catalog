@@ -1,9 +1,15 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { FavoritesProvider } from './context/FavoritesContext';
 import Navbar from './components/Navbar';
 import SkeletonCard from './components/SkeletonCard';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
 
 const Home      = lazy(() => import('./pages/Home'));
 const Movies    = lazy(() => import('./pages/Movies'));
@@ -11,6 +17,7 @@ const Series    = lazy(() => import('./pages/Series'));
 const Cartoons  = lazy(() => import('./pages/Cartoons'));
 const Favorites = lazy(() => import('./pages/Favorites'));
 const Search    = lazy(() => import('./pages/Search'));
+const Browse    = lazy(() => import('./pages/Browse'));
 
 function PageSkeleton() {
   return (
@@ -29,6 +36,7 @@ function AppContent() {
   return (
     <FavoritesProvider>
       <div className='min-h-screen bg-[#141414] text-white'>
+        <ScrollToTop />
         <Navbar />
         <Suspense fallback={<PageSkeleton />}>
           <AnimatePresence mode='wait'>
@@ -39,6 +47,7 @@ function AppContent() {
               <Route path='/cartoons'  element={<Cartoons />} />
               <Route path='/favorites' element={<Favorites />} />
               <Route path='/search'    element={<Search />} />
+              <Route path='/browse'   element={<Browse />} />
             </Routes>
           </AnimatePresence>
         </Suspense>
