@@ -55,7 +55,7 @@ export default function MovieModal({ item, onClose }: MovieModalProps) {
 			onClick={onClose}>
 
 			<motion.div
-				className='relative w-full max-w-2xl bg-neutral-900 text-white rounded-2xl shadow-2xl overflow-hidden overflow-y-auto max-h-[90vh]'
+				className='modal-scroll relative w-full max-w-2xl bg-neutral-900 text-white rounded-2xl shadow-2xl overflow-hidden overflow-y-auto max-h-[90vh]'
 				initial={{ scale: 0.92, opacity: 0 }}
 				animate={{ scale: 1,    opacity: 1 }}
 				exit={{    scale: 0.92, opacity: 0 }}
