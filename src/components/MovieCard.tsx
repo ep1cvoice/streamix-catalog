@@ -1,8 +1,10 @@
 import { useState, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ClockPlus, ClockCheck } from 'lucide-react';
 import HeartIcon from '../assets/Icons/HeartIcon';
 import StarIcon from '../assets/Icons/StarIcon';
 import { useFavoritesContext } from '../context/FavoritesContext';
+import { useWatchLaterContext } from '../context/WatchLaterContext';
 import type { ContentItem } from '../types/content';
 const MovieModal = lazy(() => import('../components/MovieModal'));
 
@@ -10,6 +12,8 @@ export default function MovieCard({ item }: { item: ContentItem }) {
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const { toggle, isFavorite } = useFavoritesContext();
 	const liked = isFavorite(item.id);
+	const { toggle: toggleWatchLater, isWatchLater } = useWatchLaterContext();
+	const savedForLater = isWatchLater(item.id);
 
 	return (
 		<>
@@ -46,6 +50,15 @@ export default function MovieCard({ item }: { item: ContentItem }) {
 						</span>
 					</div>
 				</div>
+
+				<button
+					onClick={(e) => { e.stopPropagation(); toggleWatchLater(item); }}
+					className='absolute top-4 right-12 p-2 bg-black/60 rounded-full opacity-100 md:opacity-0 md:group-hover/card:opacity-100 transition-colors duration-200 hover:bg-red-600 cursor-pointer'
+					aria-label={savedForLater ? 'Remove from watch later' : 'Add to watch later'}>
+					{savedForLater
+						? <ClockCheck size={16} strokeWidth={2} className='text-red-600' />
+						: <ClockPlus size={16} strokeWidth={2} className='text-white' />}
+				</button>
 
 				<button
 					onClick={(e) => { e.stopPropagation(); toggle(item); }}

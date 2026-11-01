@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef, type ChangeEvent } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { Clock } from 'lucide-react'
 import SearchIcon from '../assets/Icons/SearchIcon'
 
 interface NavLinkItem {
   to: string
   label: string
-  heart?: boolean
+  icon?: 'heart' | 'clock'
 }
 
 const NAV_LINKS: NavLinkItem[] = [
@@ -14,7 +15,8 @@ const NAV_LINKS: NavLinkItem[] = [
   { to: '/movies', label: 'Movies' },
   { to: '/series', label: 'Series' },
   { to: '/cartoons', label: 'Cartoons' },
-  { to: '/favorites', label: 'Favorites', heart: true },
+  { to: '/watch-later', label: 'Watch Later', icon: 'clock' },
+  { to: '/favorites', label: 'Favorites', icon: 'heart' },
 ]
 
 const HeartIcon = ({ filled }: { filled: boolean }) => (
@@ -97,22 +99,23 @@ export default function Navbar() {
         </NavLink>
 
         {/* Desktop: nav links + search */}
-        <div className='hidden md:flex items-center gap-8'>
-          <ul className='flex items-center gap-8 list-none m-0 p-0'>
-            {NAV_LINKS.map(({ to, label, heart }) => (
+        <div className='hidden md:flex items-center gap-4 lg:gap-8'>
+          <ul className='flex items-center gap-4 lg:gap-8 list-none m-0 p-0'>
+            {NAV_LINKS.map(({ to, label, icon }) => (
               <li key={to}>
                 <NavLink
                   to={to}
                   end={to === '/'}
                   className={({ isActive }) =>
-                    `text-base font-medium transition-colors duration-200 hover:text-white relative group flex items-center gap-1.5 ${
+                    `text-sm lg:text-base font-medium whitespace-nowrap transition-colors duration-200 hover:text-white relative group flex items-center gap-1.5 ${
                       isActive ? 'text-white' : 'text-gray-400'
                     }`
                   }
                 >
                   {({ isActive }) => (
                     <>
-                      {heart && <HeartIcon filled={isActive} />}
+                      {icon === 'heart' && <HeartIcon filled={isActive} />}
+                      {icon === 'clock' && <Clock className='h-[15px] w-[15px]' />}
                       {label}
                       <span
                         className={`absolute -bottom-1 left-0 h-0.5 bg-red-600 transition-all duration-200 ${
@@ -217,7 +220,7 @@ export default function Navbar() {
 
         {/* Drawer links */}
         <ul className='flex flex-col list-none m-0 p-0 px-4 py-4 gap-1'>
-          {NAV_LINKS.map(({ to, label, heart }) => (
+          {NAV_LINKS.map(({ to, label, icon }) => (
             <li key={to}>
               <NavLink
                 to={to}
@@ -232,7 +235,8 @@ export default function Navbar() {
               >
                 {({ isActive }) => (
                   <>
-                    {heart && <HeartIcon filled={isActive} />}
+                    {icon === 'heart' && <HeartIcon filled={isActive} />}
+                    {icon === 'clock' && <Clock className='h-[15px] w-[15px]' />}
                     {label}
                   </>
                 )}

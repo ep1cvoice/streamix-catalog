@@ -15,3 +15,4 @@ export function useFavoritesContext(): FavoritesContextValue {
   if (!ctx) throw new Error('useFavoritesContext must be used within FavoritesProvider')
   return ctx
 }
+
