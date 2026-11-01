@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef, type ChangeEvent } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Clock } from 'lucide-react'
+import { Clock, LogIn, LogOut } from 'lucide-react'
 import SearchIcon from '../assets/Icons/SearchIcon'
+import UserMenu from './UserMenu'
+import { useAuthContext } from '../context/AuthContext'
+import { useSignOut } from '../hooks/useSignOut'
 
 interface NavLinkItem {
   to: string
@@ -40,6 +43,8 @@ export default function Navbar() {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const location = useLocation()
   const navigate = useNavigate()
+  const { status, user } = useAuthContext()
+  const { signOut, error: signOutError } = useSignOut()
 
   // Close mobile drawer on navigation
   useEffect(() => { setIsOpen(false) }, [location])
@@ -99,15 +104,15 @@ export default function Navbar() {
         </NavLink>
 
         {/* Desktop: nav links + search */}
-        <div className='hidden md:flex items-center gap-4 lg:gap-8'>
-          <ul className='flex items-center gap-4 lg:gap-8 list-none m-0 p-0'>
+        <div className='hidden md:flex items-center gap-4 lg:gap-6 xl:gap-8'>
+          <ul className='flex items-center gap-4 lg:gap-6 xl:gap-8 list-none m-0 p-0'>
             {NAV_LINKS.map(({ to, label, icon }) => (
               <li key={to}>
                 <NavLink
                   to={to}
                   end={to === '/'}
                   className={({ isActive }) =>
-                    `text-sm lg:text-base font-medium whitespace-nowrap transition-colors duration-200 hover:text-white relative group flex items-center gap-1.5 ${
+                    `text-sm xl:text-base font-medium whitespace-nowrap transition-colors duration-200 hover:text-white relative group flex items-center gap-1.5 ${
                       isActive ? 'text-white' : 'text-gray-400'
                     }`
                   }
@@ -155,6 +160,8 @@ export default function Navbar() {
               <SearchIcon />
             </button>
           </div>
+
+          <UserMenu />
         </div>
 
         {/* Mobile: hamburger only */}
@@ -244,6 +251,33 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
+
+        {/* Drawer account section, pinned to the bottom */}
+        <div className='mt-auto px-4 py-4 border-t border-white/5'>
+          {user ? (
+            <>
+              <p className='px-4 pb-2 text-xs text-gray-500 truncate'>{user.email}</p>
+              <button
+                onClick={signOut}
+                className='w-full flex items-center gap-3 px-4 py-3 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer'
+              >
+                <LogOut className='h-[15px] w-[15px]' />
+                Sign out
+              </button>
+              {signOutError && <p role='alert' className='px-4 pt-1 text-xs text-red-400'>{signOutError}</p>}
+            </>
+          ) : (
+            status === 'guest' && (
+              <NavLink
+                to='/login'
+                className='flex items-center gap-3 px-4 py-3 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-colors'
+              >
+                <LogIn className='h-[15px] w-[15px]' />
+                Sign in
+              </NavLink>
+            )
+          )}
+        </div>
       </div>
     </>
   )

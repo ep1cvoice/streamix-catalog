@@ -1,9 +1,11 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { AuthProvider } from './context/AuthContext';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { WatchLaterProvider } from './context/WatchLaterContext';
 import Navbar from './components/Navbar';
+import RequireAuth from './components/RequireAuth';
 import SkeletonCard from './components/SkeletonCard';
 
 function ScrollToTop() {
@@ -20,6 +22,8 @@ const Favorites = lazy(() => import('./pages/Favorites'));
 const WatchLater = lazy(() => import('./pages/WatchLater'));
 const Search    = lazy(() => import('./pages/Search'));
 const Browse    = lazy(() => import('./pages/Browse'));
+const Login     = lazy(() => import('./pages/Login'));
+const Register  = lazy(() => import('./pages/Register'));
 
 function PageSkeleton() {
   return (
@@ -36,28 +40,32 @@ function AppContent() {
   const location = useLocation();
 
   return (
-    <FavoritesProvider>
-      <WatchLaterProvider>
-        <div className='min-h-screen bg-[#141414] text-white'>
-          <ScrollToTop />
-          <Navbar />
-          <Suspense fallback={<PageSkeleton />}>
-            <AnimatePresence mode='wait'>
-              <Routes location={location} key={location.pathname}>
-                <Route path='/'            element={<Home />} />
-                <Route path='/movies'      element={<Movies />} />
-                <Route path='/series'      element={<Series />} />
-                <Route path='/cartoons'    element={<Cartoons />} />
-                <Route path='/favorites'   element={<Favorites />} />
-                <Route path='/watch-later' element={<WatchLater />} />
-                <Route path='/search'      element={<Search />} />
-                <Route path='/browse'      element={<Browse />} />
-              </Routes>
-            </AnimatePresence>
-          </Suspense>
-        </div>
-      </WatchLaterProvider>
-    </FavoritesProvider>
+    <AuthProvider>
+      <FavoritesProvider>
+        <WatchLaterProvider>
+          <div className='min-h-screen bg-[#141414] text-white'>
+            <ScrollToTop />
+            <Navbar />
+            <Suspense fallback={<PageSkeleton />}>
+              <AnimatePresence mode='wait'>
+                <Routes location={location} key={location.pathname}>
+                  <Route path='/'            element={<Home />} />
+                  <Route path='/movies'      element={<Movies />} />
+                  <Route path='/series'      element={<Series />} />
+                  <Route path='/cartoons'    element={<Cartoons />} />
+                  <Route path='/favorites'   element={<RequireAuth><Favorites /></RequireAuth>} />
+                  <Route path='/watch-later' element={<RequireAuth><WatchLater /></RequireAuth>} />
+                  <Route path='/search'      element={<Search />} />
+                  <Route path='/browse'      element={<Browse />} />
+                  <Route path='/login'       element={<Login />} />
+                  <Route path='/register'    element={<Register />} />
+                </Routes>
+              </AnimatePresence>
+            </Suspense>
+          </div>
+        </WatchLaterProvider>
+      </FavoritesProvider>
+    </AuthProvider>
   );
 }
 
