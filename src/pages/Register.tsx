@@ -21,6 +21,7 @@ export default function Register() {
         passwordAutoComplete='new-password'
         passwordMinLength={8}
         passwordHint='At least 8 characters'
+        confirmPassword
         onSubmit={register}
         footer={
           <>

@@ -115,11 +115,11 @@ export default function HeroBanner() {
 							<button
 								onClick={() => toggle(movie)}
 								className={`flex items-center gap-2 font-bold px-8 py-3 rounded border backdrop-blur-sm transition-colors duration-200 text-sm cursor-pointer ${
-									isFavorite(movie.id)
+									isFavorite(movie)
 										? 'bg-red-600/20 border-red-600/60 text-red-400 hover:bg-red-600/30'
 										: 'bg-white/15 hover:bg-white/25 text-white border-white/20'
 								}`}>
-								{isFavorite(movie.id) ? (
+								{isFavorite(movie) ? (
 									<>
 										<svg xmlns='http://www.w3.org/2000/svg' className='h-5 w-5' viewBox='0 0 20 20' fill='currentColor'>
 											<path

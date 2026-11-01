@@ -7,6 +7,8 @@ interface AuthFormProps {
   passwordAutoComplete: 'current-password' | 'new-password'
   passwordMinLength?: number
   passwordHint?: string
+  // Sign-up only: a second password field that has to match the first
+  confirmPassword?: boolean
   onSubmit: (email: string, password: string) => Promise<void>
   footer: ReactNode
 }
@@ -14,6 +16,7 @@ interface AuthFormProps {
 interface FieldErrors {
   email?: string
   password?: string
+  confirmPassword?: string
 }
 
 export default function AuthForm({
@@ -22,20 +25,29 @@ export default function AuthForm({
   passwordAutoComplete,
   passwordMinLength,
   passwordHint,
+  confirmPassword = false,
   onSubmit,
   footer,
 }: AuthFormProps) {
   const id = useId()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordAgain, setPasswordAgain] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
   const [submitting, setSubmitting] = useState(false)
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSubmitting(true)
     setError(null)
+
+    // Checked here, not on the server: the API only ever receives one password
+    if (confirmPassword && password !== passwordAgain) {
+      setFieldErrors({ confirmPassword: "Passwords don't match" })
+      return
+    }
+
+    setSubmitting(true)
     setFieldErrors({})
     try {
       await onSubmit(email, password)
@@ -93,6 +105,17 @@ export default function AuthForm({
           error={fieldErrors.password}
           hint={passwordHint}
         />
+        {confirmPassword && (
+          <Field
+            id={`${id}-password-again`}
+            label='Confirm password'
+            type='password'
+            autoComplete='new-password'
+            value={passwordAgain}
+            onChange={setPasswordAgain}
+            error={fieldErrors.confirmPassword}
+          />
+        )}
 
         <button
           type='submit'

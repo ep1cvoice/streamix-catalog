@@ -7,10 +7,16 @@ import { WatchLaterProvider } from './context/WatchLaterContext';
 import Navbar from './components/Navbar';
 import RequireAuth from './components/RequireAuth';
 import SkeletonCard from './components/SkeletonCard';
+import { useLegacyListsImport } from './hooks/useLegacyListsImport';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
+function LegacyListsImport() {
+  useLegacyListsImport();
   return null;
 }
 
@@ -45,6 +51,7 @@ function AppContent() {
         <WatchLaterProvider>
           <div className='min-h-screen bg-[#141414] text-white'>
             <ScrollToTop />
+            <LegacyListsImport />
             <Navbar />
             <Suspense fallback={<PageSkeleton />}>
               <AnimatePresence mode='wait'>
