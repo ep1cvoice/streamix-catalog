@@ -1,0 +1,32 @@
+# VS Code REST Client: log in via auth.rest first, the session cookie is reused here
+
+### Favorites
+GET http://localhost:3001/api/lists/favorites
+
+### Watch later
+GET http://localhost:3001/api/lists/watch-later
+
+### Add a movie to favorites (idempotent)
+PUT http://localhost:3001/api/lists/favorites/movie/155
+Content-Type: application/json
+
+{
+  "id": 155,
+  "type": "movie",
+  "title": "The Dark Knight",
+  "year": 2008,
+  "rating": 8.5,
+  "genre": ["Action", "Crime"],
+  "poster": "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
+  "description": "Batman raises the stakes in his war on crime.",
+  "language": "en"
+}
+
+### Remove it
+DELETE http://localhost:3001/api/lists/favorites/movie/155
+
+### Import old localStorage lists
+POST http://localhost:3001/api/lists/import
+Content-Type: application/json
+
+{ "favorites": [], "watch-later": [] }

@@ -3,6 +3,7 @@ import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
 import authRouter from './controllers/auth.js'
 import healthRouter from './controllers/health.js'
+import listsRouter from './controllers/lists.js'
 import { unknownEndpoint, errorHandler } from './middleware/errorHandler.js'
 import { TRUST_PROXY } from './utils/config.js'
 
@@ -16,6 +17,7 @@ app.use(cookieParser())
 
 app.use('/api/health', healthRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/lists', listsRouter)
 
 app.use(unknownEndpoint)
 app.use(errorHandler)

@@ -1,4 +1,4 @@
-import type { RequestHandler } from 'express'
+import type { Request, RequestHandler } from 'express'
 import { readSessionUserId } from '../utils/session.js'
 
 export const requireAuth: RequestHandler = (req, res, next) => {
@@ -9,4 +9,10 @@ export const requireAuth: RequestHandler = (req, res, next) => {
   }
   req.userId = userId
   next()
+}
+
+// For handlers behind requireAuth: a missing id here is a wiring bug, not a client error
+export function authedUserId(req: Request): string {
+  if (!req.userId) throw new Error('authedUserId called on a route without requireAuth')
+  return req.userId
 }
