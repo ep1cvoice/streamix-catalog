@@ -28,4 +28,7 @@ function requireEnv(name: string): string {
 
 export const PORT = Number(process.env.PORT ?? 3001)
 export const MONGODB_URI = requireEnv('MONGODB_URI')
+export const JWT_SECRET = requireEnv('JWT_SECRET')
 export const IS_PROD = process.env.NODE_ENV === 'production'
+// Reverse proxies in front of the app; rate limiting needs it to see real client IPs
+export const TRUST_PROXY = Number(process.env.TRUST_PROXY ?? 0)

@@ -1,4 +1,5 @@
 import type { ErrorRequestHandler, RequestHandler } from 'express'
+import { z } from 'zod'
 import * as logger from '../utils/logger.js'
 
 export const unknownEndpoint: RequestHandler = (_req, res) => {
@@ -17,6 +18,15 @@ function isClientHttpError(err: unknown): err is { status: number; message: stri
 export const errorHandler: ErrorRequestHandler = (err: unknown, _req, res, next) => {
   if (res.headersSent) {
     next(err)
+    return
+  }
+
+  // Thrown by schema.parse() in controllers; per-field messages are for the forms
+  if (err instanceof z.ZodError) {
+    res.status(400).json({
+      error: err.issues[0]?.message ?? 'invalid input',
+      fields: z.flattenError(err).fieldErrors,
+    })
     return
   }
 
