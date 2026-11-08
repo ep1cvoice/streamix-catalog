@@ -20,7 +20,7 @@ function requireEnv(name: string): string {
 
   const hint = existsSync(ENV_PATH)
     ? `add ${name} to server/.env`
-    : 'copy server/.env.example to server/.env and fill it in'
+    : 'set it in the host environment (e.g. Render → Environment), or locally copy server/.env.example to server/.env'
   // A plain message instead of a thrown error: a stack trace here only buries the actual fix
   console.error(`Missing required env variable ${name}: ${hint}`)
   process.exit(1)
