@@ -1,12 +1,10 @@
-import { motion } from 'framer-motion'
 import { Clock } from 'lucide-react'
 import { useWatchLaterContext } from '../context/WatchLaterContext'
-import MovieCard from '../components/MovieCard'
+import ListContent from '../components/ListContent'
 import PageWrapper from '../components/PageWrapper'
-import { gridContainer, cardVariant } from '../utils/motionVariants'
 
 export default function WatchLater() {
-  const { items } = useWatchLaterContext()
+  const { items, isLoading, error, refetch } = useWatchLaterContext()
 
   return (
     <PageWrapper>
@@ -18,28 +16,22 @@ export default function WatchLater() {
           Watch Later
         </h1>
 
-        {items.length === 0 ? (
-          <div className='flex flex-col items-center justify-center py-32'>
-            <div className='text-red-600/30 mb-6'>
-              <Clock className='h-24 w-24' strokeWidth={1} />
+        <ListContent
+          items={items}
+          isLoading={isLoading}
+          error={error}
+          onRetry={() => refetch()}
+          errorTitle="Couldn't load your watch later list"
+          empty={
+            <div className='flex flex-col items-center justify-center py-32'>
+              <div className='text-red-600/30 mb-6'>
+                <Clock className='h-24 w-24' strokeWidth={1} />
+              </div>
+              <p className='text-gray-400 text-lg font-medium mb-2'>Nothing here yet</p>
+              <p className='text-gray-600 text-sm'>Click the clock on any card to save it here</p>
             </div>
-            <p className='text-gray-400 text-lg font-medium mb-2'>Nothing here yet</p>
-            <p className='text-gray-600 text-sm'>Click the clock on any card to save it here</p>
-          </div>
-        ) : (
-          <motion.div
-            className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4'
-            variants={gridContainer}
-            initial='hidden'
-            animate='show'
-          >
-            {items.map(item => (
-              <motion.div key={item.id} variants={cardVariant}>
-                <MovieCard item={item} />
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
+          }
+        />
       </div>
     </PageWrapper>
   )

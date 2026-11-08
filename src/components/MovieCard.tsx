@@ -11,9 +11,9 @@ const MovieModal = lazy(() => import('../components/MovieModal'));
 export default function MovieCard({ item }: { item: ContentItem }) {
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const { toggle, isFavorite } = useFavoritesContext();
-	const liked = isFavorite(item.id);
+	const liked = isFavorite(item);
 	const { toggle: toggleWatchLater, isWatchLater } = useWatchLaterContext();
-	const savedForLater = isWatchLater(item.id);
+	const savedForLater = isWatchLater(item);
 
 	return (
 		<>
